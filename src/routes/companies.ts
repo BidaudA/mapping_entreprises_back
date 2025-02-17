@@ -76,4 +76,91 @@ router.get('/', async (req, res) => {
     }
   });
 
+// Delete a company
+
+/**
+ * @swagger
+ * /api/companies/{id}:
+ *  delete:
+ *   summary: Delete a company
+ *  parameters:
+ *   - in: path
+ *    name: id
+ *   required: true
+ *  schema:
+ *  type: integer
+ * responses:
+ * 200:
+ * description: Company deleted
+ * 404:
+ * description: Company not found
+ * 500:
+ * description: Internal server error
+ * 
+ **/
+router.delete('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const result = await query('DELETE FROM companies WHERE id = $1 ON CASCADE', [id]);
+      if (result.rowCount === 0) {
+        res.status(404).json({ error: 'Company not found' });
+      } else {
+        res.json({ message: 'Company deleted' });
+      }
+    } catch (error) {
+      console.error('Error deleting company:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  // Update a company
+  /**
+   * @swagger
+   * /api/companies/{id}:
+   *   put:
+   *     summary: Update a company
+   *     parameters:
+   *       - in: path
+   *         name: id
+   *         required: true
+   *         schema:
+   *           type: integer
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               name:
+   *                 type: string
+   *               description:
+   *                 type: string
+   *     responses:
+   *       200:
+   *         description: Company updated
+   *       404:
+   *         description: Company not found
+   *       500:
+   *         description: Internal server error
+   */
+  router.put('/:id', async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { name, description } = req.body;
+      const result = await query(
+        'UPDATE companies SET name = $1, description = $2 WHERE id = $3',
+        [name, description, id]
+      );
+      if (result.rowCount === 0) {
+        res.status(404).json({ error: 'Company not found' });
+      } else {
+        res.json({ message: 'Company updated' });
+      }
+    } catch (error) {
+      console.error('Error updating company:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   export default router;
