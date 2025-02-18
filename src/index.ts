@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import companiesRouter from './routes/companies';
+import technologiesRouter from './routes/technologies';
 import cors from 'cors';
 import { setupSwagger } from './swagger';
 
@@ -23,6 +24,7 @@ app.use(cors({
 
 // Routes
 app.use('/api/companies', companiesRouter);
+app.use('/api/technologies', technologiesRouter);
 
 // Health check endpoint
 app.get('/health', (req, res) => {

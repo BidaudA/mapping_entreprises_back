@@ -17,5 +17,5 @@ export interface Company {
     lat: number;
     lng: number;
   };
-  address: string;
+  adress: string;
 }

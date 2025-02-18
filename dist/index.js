@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const companies_1 = __importDefault(require("./routes/companies"));
+const technologies_1 = __importDefault(require("./routes/technologies"));
 const cors_1 = __importDefault(require("cors"));
 const swagger_1 = require("./swagger");
 dotenv_1.default.config();
@@ -22,6 +23,7 @@ app.use((0, cors_1.default)({
 }));
 // Routes
 app.use('/api/companies', companies_1.default);
+app.use('/api/technologies', technologies_1.default);
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.json({ status: 'OK' });
