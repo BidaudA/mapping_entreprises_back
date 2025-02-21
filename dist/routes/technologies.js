@@ -97,4 +97,59 @@ router.get('/:type', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+/**
+ * @swagger
+ * /api/technologies:
+ *   post:
+ *     summary: Create a new technology
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               type:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Technology created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 type:
+ *                   type: string
+ *                 created_at:
+ *                   type: string
+ *                   format: date-time
+ *                 updated_at:
+ *                   type: string
+ *                   format: date-time
+ *       500:
+ *         description: Internal Server Error
+ */
+router.post('/', async (req, res) => {
+    try {
+        const name = req.body.name;
+        const type = req.body.type;
+        const result = await (0, database_1.query)(`
+        INSERT INTO technologies (name, type)
+        VALUES ($1, $2)
+        RETURNING id
+      `, [name, type]);
+        console.log(result);
+        res.status(201).json(result.rows[0]);
+    }
+    catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 exports.default = router;
