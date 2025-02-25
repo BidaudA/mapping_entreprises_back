@@ -133,13 +133,13 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, technologies_back, technologies_front, technologies_cloud } = req.body;
+    const { name, description, technologies_back, technologies_front, technologies_cloud, domain } = req.body;
     console.log(technologies_back, technologies_front, technologies_cloud);
     await query('BEGIN');
 
     const result = await query(
-      'UPDATE companies SET name = $1, description = $2 WHERE id = $3',
-      [name, description, id]
+      'UPDATE companies SET name = $1, description = $2, domain = $4 WHERE id = $3',
+      [name, description, id, domain]
     );
 
     if (result.rowCount === 0) {

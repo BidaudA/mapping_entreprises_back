@@ -131,10 +131,10 @@ router.delete('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, description, technologies_back, technologies_front, technologies_cloud } = req.body;
+        const { name, description, technologies_back, technologies_front, technologies_cloud, domain } = req.body;
         console.log(technologies_back, technologies_front, technologies_cloud);
         await (0, database_1.query)('BEGIN');
-        const result = await (0, database_1.query)('UPDATE companies SET name = $1, description = $2 WHERE id = $3', [name, description, id]);
+        const result = await (0, database_1.query)('UPDATE companies SET name = $1, description = $2, domain = $4 WHERE id = $3', [name, description, id, domain]);
         if (result.rowCount === 0) {
             await (0, database_1.query)('ROLLBACK');
             res.status(404).json({ error: 'Company not found' });
@@ -200,6 +200,8 @@ router.put('/:id', async (req, res) => {
  *               type: array
  *               items:
  *                 type: string
+ *             domain:
+ *               type: string
  *     responses:
  *       200:
  *         description: Company successfully updated
@@ -210,9 +212,9 @@ router.put('/:id', async (req, res) => {
  */
 router.post('/', async (req, res) => {
     try {
-        const { name, description, latitude, longitude, adress, technologies_back, technologies_front, technologies_cloud } = req.body;
+        const { name, description, latitude, longitude, adress, technologies_back, technologies_front, technologies_cloud, domain } = req.body;
         await (0, database_1.query)('BEGIN');
-        const result = await (0, database_1.query)('INSERT INTO companies (name, description, latitude, longitude, adress) VALUES ($1, $2, $3, $4, $5) RETURNING id', [name, description, latitude, longitude, adress]);
+        const result = await (0, database_1.query)('INSERT INTO companies (name, description, latitude, longitude, adress, domain) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id', [name, description, latitude, longitude, adress, domain]);
         const companyId = result.rows[0].id;
         const insertTechnology = async (technology, type) => {
             const techResult = await (0, database_1.query)('SELECT id FROM technologies WHERE name = $1 AND type = $2', [technology, type]);
