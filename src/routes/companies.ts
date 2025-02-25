@@ -211,6 +211,8 @@ router.put('/:id', async (req, res) => {
  *               type: array
  *               items:
  *                 type: string
+ *             domain:
+ *               type: string
  *     responses:
  *       200:
  *         description: Company successfully updated
@@ -221,13 +223,13 @@ router.put('/:id', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   try {
-    const { name, description,latitude, longitude, adress, technologies_back, technologies_front, technologies_cloud } = req.body;
+    const { name, description,latitude, longitude, adress, technologies_back, technologies_front, technologies_cloud, domain } = req.body;
 
     await query('BEGIN');
 
     const result = await query(
-      'INSERT INTO companies (name, description, latitude, longitude, adress) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-      [name, description, latitude, longitude, adress]
+      'INSERT INTO companies (name, description, latitude, longitude, adress, domain) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+      [name, description, latitude, longitude, adress, domain]
     );
 
     const companyId = result.rows[0].id;
