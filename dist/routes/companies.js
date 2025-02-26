@@ -66,7 +66,6 @@ router.get('/', async (req, res) => {
       `);
         res.setHeader('Content-Type', 'application/json; charset=UTF8');
         res.json(result.rows);
-        console.log(result.rows);
     }
     catch (error) {
         console.error('Error fetching companies:', error);

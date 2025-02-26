@@ -68,8 +68,8 @@ router.get('/', async (req, res) => {
         GROUP BY c.id
       `);
       res.setHeader('Content-Type', 'application/json; charset=UTF8');
-      res.json(result.rows);
-      console.log(result.rows);
+      res.json(result.rows);      
+      
     } catch (error) {
       console.error('Error fetching companies:', error);
       res.status(500).json({ error: 'Internal server error' });

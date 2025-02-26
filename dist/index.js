@@ -13,6 +13,11 @@ dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use(express_1.default.json());
+app.use((req, res, next) => {
+    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    next();
+});
+app.use(express_1.default.urlencoded({ extended: true }));
 // Setup Swagger
 (0, swagger_1.setupSwagger)(app);
 // Utiliser le middleware CORS
