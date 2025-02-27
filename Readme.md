@@ -2,7 +2,7 @@
 
 ## 📋 Description
 
-**Bordeaux Tech Companies** est une application web interactive qui cartographie et répertorie les entreprises technologiques de la région bordelaise. Elle permet de visualiser leur emplacement, les technologies qu'elles utilisent et les types de postes qu'elles proposent.
+**Bordeaux Mapping Entreprises** est une application web interactive qui cartographie et répertorie les entreprises technologiques de la région bordelaise. Elle permet de visualiser leur emplacement, les technologies qu'elles utilisent et les types de postes qu'elles proposent.
 
 
 
